@@ -1,0 +1,60 @@
+@model Test.Models.Course
+
+@{
+    ViewData["Title"] = "Cập Nhật Học Phần";
+}
+
+
+
+<div class="container">
+    <div class="form-card">
+        <h1 class="h3 form-title">Cập Nhật Học Phần</h1>
+        
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group-custom">
+                <label asp-for="Name" class="form-label-custom">Tên học phần</label>
+                <input asp-for="Name" class="form-control form-control-custom" />
+                <span asp-validation-for="Name" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label class="form-label-custom">Hình ảnh học phần</label>
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <div class="mb-2">
+                        <img src="@Model.Image" alt="@Model.Name" class="course-thumb" style="width: 120px; height: 80px; object-fit: cover;" />
+                    </div>
+                }
+                <input type="file" name="imageFile" class="form-control form-control-custom" accept="image/*" />
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Credits" class="form-label-custom">Số tín chỉ</label>
+                <input asp-for="Credits" type="number" class="form-control form-control-custom" min="1" max="10" />
+                <span asp-validation-for="Credits" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Lecturer" class="form-label-custom">Giảng viên phụ trách</label>
+                <input asp-for="Lecturer" class="form-control form-control-custom" />
+                <span asp-validation-for="Lecturer" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="CategoryId" class="form-label-custom">Thể loại chuyên ngành</label>
+                <select asp-for="CategoryId" class="form-control form-control-custom" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger-custom"></span>
+            </div>
+
+            <button type="submit" class="btn-submit-custom">Lưu thay đổi</button>
+            <a asp-action="Index" class="btn-back-custom">Hủy & Quay lại</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

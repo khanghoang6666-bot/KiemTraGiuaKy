@@ -1,0 +1,104 @@
+@model IEnumerable<Test.Models.Course>
+
+@{
+    ViewData["Title"] = "Quản Lý Học Phần";
+}
+
+
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="page-header-container">
+        <div>
+            <h1 class="h2 fw-800 mb-1" style="font-weight: 800;">Quản Lý Học Phần</h1>
+            <p class="text-muted mb-0">Thực hiện các thao tác thêm, sửa, xóa học phần.</p>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn-create-custom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5a.5.5 0 0 1 .5-.5"/>
+                </svg>
+                Thêm Học Phần Mới
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card-table-wrapper">
+        <div class="table-responsive">
+            <table class="table table-custom table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Hình ảnh</th>
+                        <th>Tên học phần</th>
+                        <th>Thể loại</th>
+                        <th style="width: 100px;">Số tín chỉ</th>
+                        <th>Giảng viên</th>
+                        <th style="width: 180px;" class="text-end">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+                                    <img src="@item.Image" alt="@item.Name" class="course-thumb" />
+                                }
+                                else
+                                {
+                                    <div class="course-thumb d-flex align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+                                            <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                                        </svg>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                <span class="fw-600 text-dark">@item.Name</span>
+                            </td>
+                            <td>
+                                <span class="category-badge-table">@(item.Category?.Name ?? "N/A")</span>
+                            </td>
+                            <td>
+                                <span class="credits-badge-table">@item.Credits tín chỉ</span>
+                            </td>
+                            <td>
+                                @item.Lecturer
+                            </td>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit-custom">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v-6a.5.5 0 0 0-.5-.5h-11A.5.5 0 0 0 2 3v11a.5.5 0 0 0 .5.5H12a.5.5 0 0 0 0-1H2.5A.5.5 0 0 1 2 12.5v-9A.5.5 0 0 1 2.5 3H12a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                        </svg>
+                                        Sửa
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete-custom">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                        </svg>
+                                        Xóa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            Chưa có học phần nào được tạo.
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

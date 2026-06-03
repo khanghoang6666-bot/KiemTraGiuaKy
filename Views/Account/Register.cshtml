@@ -1,0 +1,48 @@
+@model Test.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng Ký Tài Khoản";
+}
+
+
+
+<div class="container">
+    <div class="register-card">
+        <h1 class="h2 register-title">Tạo Tài Khoản</h1>
+        <p class="register-subtitle">Đăng ký để tham gia hệ thống đăng ký học phần</p>
+        
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger-custom"></div>
+
+            <div class="form-group-custom">
+                <label asp-for="Username" class="form-label-custom">Tên đăng nhập</label>
+                <input asp-for="Username" class="form-control form-control-custom" placeholder="Nhập tên đăng nhập..." autocomplete="username" />
+                <span asp-validation-for="Username" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Email" class="form-label-custom">Địa chỉ Email</label>
+                <input asp-for="Email" type="email" class="form-control form-control-custom" placeholder="name@example.com" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Password" class="form-label-custom">Mật khẩu</label>
+                <input asp-for="Password" type="password" class="form-control form-control-custom" placeholder="Tối thiểu 6 ký tự..." autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-danger-custom"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="ConfirmPassword" class="form-label-custom">Xác nhận mật khẩu</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control form-control-custom" placeholder="Nhập lại mật khẩu..." autocomplete="new-password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger-custom"></span>
+            </div>
+
+            <button type="submit" class="btn-register-custom">Đăng Ký</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
